@@ -26,7 +26,7 @@
                             <td th:text="${book.numberOfPages}"></td>
                             <td class="text-right">
                                 <th:block>
-                                    <a th:href="@{'/products/edit-form/{id}' (id=${book.bookDBR})}"
+                                    <a th:href="@{'/books/{book}' (book=${book.bookDBR})}"
                                        class="btn btn-sm btn-info edit-product"><i class="fa fa-trash">Edit</i></a>
                                 </th:block>
 

@@ -32,10 +32,9 @@ public class DbpediaService {
         return this.getListBooksFromJson(jsonArray);
     }
 
-    public final Book getDataDetails(String url) {
+    public final Book getDataDetails(String url, String bookDBR) {
         JSONArray jsonArray = this.getData(url);
-        return this.getBookDetailsFromJson(jsonArray);
-
+        return this.getBookDetailsFromJson(jsonArray, bookDBR);
     }
 
     private final JSONArray getData(String url) {
@@ -72,19 +71,40 @@ public class DbpediaService {
 
     private List<Book> getListBooksFromJson(JSONArray jsonArray) {
         List<Book> books = jsonArray.stream().map((jsonBook) -> {
-            String bookDBR = this.getFromJson((JSONObject) jsonBook, "book");
+            String bookDBR = this.getFromJson((JSONObject) jsonBook, "book").split("/")[4];
             String label = this.getFromJson((JSONObject) jsonBook, "label");
+            String name = this.getFromJson((JSONObject) jsonBook, "name");
             String author = this.getFromJson((JSONObject) jsonBook, "author");
             String numberOfPages = this.getFromJson((JSONObject) jsonBook, "numberOfPages");
             String pages = this.getFromJson((JSONObject) jsonBook, "pages");
-            Book book = new Book(bookDBR, label, author, (!numberOfPages.isEmpty()) ? numberOfPages : pages);
+            Book book = new Book(bookDBR, (!label.isEmpty()) ? label : name, author, (!numberOfPages.isEmpty()) ? numberOfPages : pages);
             return book;
         }).collect(Collectors.toList());
         return books;
     }
 
-    private Book getBookDetailsFromJson(JSONArray jsonArray) {
-        Book book = new Book();
+    private Book getBookDetailsFromJson(JSONArray jsonArray, String bookDBR) {
+        JSONObject jsonBook = (JSONObject) jsonArray.get(0);
+        String label = this.getFromJson(jsonBook, "label");
+        String name = this.getFromJson(jsonBook, "name");
+        String abstractDescription = this.getFromJson(jsonBook, "abstract");
+        String authorName = this.getFromJson(jsonBook, "author");
+        String authorDBR = this.getFromJson(jsonBook, "authorLink");
+        if (authorDBR != null) authorDBR = authorDBR.split("/")[4];
+        String literaryGenre = this.getFromJson(jsonBook, "literaryGenre");
+        String genre = this.getFromJson(jsonBook, "genre");
+        String mediaType = this.getFromJson(jsonBook, "mediaType");
+        String numberOfPages = this.getFromJson(jsonBook, "numberOfPages");
+        String pages = this.getFromJson(jsonBook, "pages");
+        String publisher = this.getFromJson(jsonBook, "publisher");
+        String published = this.getFromJson(jsonBook, "published");
+        String thumbnail = this.getFromJson(jsonBook, "thumbnail");
+        String language = this.getFromJson(jsonBook, "language");
+
+        Book book = new Book(bookDBR, (!label.isEmpty()) ? label : name, abstractDescription,
+                authorDBR, authorName, (!literaryGenre.isEmpty()) ? literaryGenre : genre,
+                mediaType, (!numberOfPages.isEmpty()) ? numberOfPages : pages, publisher,
+                published, thumbnail, language);
         return book;
     }
 
