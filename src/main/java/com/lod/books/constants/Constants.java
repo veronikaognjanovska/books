@@ -33,17 +33,35 @@ public class Constants {
 
     public static final String getBooksURL(Integer limit) {
         return DBPEDIA_SPARQL_URL + DBPEDIA_SPARQL_URL_GRAPH +
-                "select+distinct+%3Fbook+where+%7B%3Fbook+rdf%3Atype+dbo%3ABook%7D+LIMIT+"
+                "select+distinct+%3Fbook+%3Flabel+%3Fauthor+%3FnumberOfPages%3Fpages+where+%7B%3Fbook+rdf%3Atype+dbo%3ABook%3Brdfs%3Alabel+%3Flabel.%0D%0A"
+                + "OPTIONAL+%7B+%3Fbook+dbo%3Aauthor+%3FauthorLink.+%3FauthorLink+dbp%3Aname+%3Fauthor+%7D%0D%0A"
+                + "OPTIONAL+%7B+%3Fbook+dbo%3AnumberOfPages+%3FnumberOfPages%7D%0D%0A."
+                + "OPTIONAL+%7B+%3Fbook+dbp%3Apages+%3Fpages%7D.%0D%0A"
+                + "FILTER+regex%28lcase%28str%28%3Flabel%29%29%2C+%22.*dreams%22%29."
+                + "FILTER+%28lang%28%3Flabel%29+%3D+%22en%22%29.%7D+LIMIT+"
+//                "select+distinct+%3Fbook+where+%7B%3Fbook+rdf%3Atype+dbo%3ABook%7D+LIMIT+"
                 + limit.toString()
                 + DBPEDIA_SPARQL_URL_END;
     }
 
     public static final String getBookSearchURL(String searchBookTitle, Integer limit) {
         return DBPEDIA_SPARQL_URL + DBPEDIA_SPARQL_URL_GRAPH +
-                "select+distinct+%3Fbook+where+%7B%3Fbook+rdf%3Atype+dbo%3ABook%3Brdfs%3Alabel+%3Flabel.FILTER+regex%28lcase%28str%28%3Flabel%29%29%2C+%22.*"
+                "select+distinct+%3Fbook+%3Flabel+%3Fauthor+%3FnumberOfPages%3Fpages+where+%7B%3Fbook+rdf%3Atype+dbo%3ABook%3Brdfs%3Alabel+%3Flabel.%0D%0A"
+                + "OPTIONAL+%7B+%3Fbook+dbo%3Aauthor+%3FauthorLink.+%3FauthorLink+dbp%3Aname+%3Fauthor+%7D%0D%0A"
+                + "OPTIONAL+%7B+%3Fbook+dbo%3AnumberOfPages+%3FnumberOfPages%7D%0D%0A."
+                + "OPTIONAL+%7B+%3Fbook+dbp%3Apages+%3Fpages%7D.%0D%0A"
+                + "FILTER+regex%28lcase%28str%28%3Flabel%29%29%2C+%22.*"
                 + searchBookTitle.replace(" ", "+")
                 + "%22%29.FILTER+%28lang%28%3Flabel%29+%3D+%22en%22%29.%7D+LIMIT+"
                 + limit.toString()
                 + DBPEDIA_SPARQL_URL_END;
     }
 }
+
+/*
+select distinct ?book ?label ?author ?numberOfPages?pages where {?book rdf:type dbo:Book;rdfs:label ?label.
+OPTIONAL { ?book dbo:author ?authorLink. ?authorLink dbp:name ?author }
+OPTIONAL { ?book dbo:numberOfPages ?numberOfPages}
+.OPTIONAL { ?book dbp:pages ?pages}.
+FILTER regex(lcase(str(?label)), ".*dreams").FILTER (lang(?label) = "en").} LIMIT 100
+*/
