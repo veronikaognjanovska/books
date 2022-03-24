@@ -6,10 +6,7 @@ import com.lod.books.services.DbpediaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,8 +31,8 @@ public class BookController {
         return "master-template";
     }
 
-    @GetMapping("/search")
-    public String searchBooks(@RequestParam(required = false) String error, Model model, String search) {
+    @PostMapping("/search")
+    public String searchBooks(@RequestParam(required = false) String error, Model model, @RequestParam("search") String search) {
         if (error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);

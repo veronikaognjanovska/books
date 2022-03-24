@@ -3,7 +3,8 @@
         <div class="container">
             <a class="navbar-brand" href="/">Library</a>
 
-            <button aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            <button aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler"
                     data-target="#navbarsExampleDefault" data-toggle="collapse" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -19,13 +20,18 @@
 
                 </ul>
 
-                <form class="form-inline my-2 my-lg-0">
+                <form class="form-inline my-2 my-lg-0"
+                      th:action="@{'/books/search'}"
+                      th:method="POST"
+                >
                     <div class="input-group input-group-sm">
                         <input aria-describedby="inputGroup-sizing-sm" aria-label="Small" class="form-control"
                                placeholder="Search..."
+                               th:name="search"
+                               th:id="search"
                                type="text">
                         <div class="input-group-append">
-                            <button class="btn btn-secondary btn-number" type="button">
+                            <button class="btn btn-secondary btn-number" type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
