@@ -85,25 +85,24 @@ public class DbpediaService {
 
     private Book getBookDetailsFromJson(JSONArray jsonArray, String bookDBR) {
         JSONObject jsonBook = (JSONObject) jsonArray.get(0);
-        String label = this.getFromJson(jsonBook, "label");
-        String name = this.getFromJson(jsonBook, "name");
-        String abstractDescription = this.getFromJson(jsonBook, "abstract");
-        String authorName = this.getFromJson(jsonBook, "author");
-        String authorDBR = this.getFromJson(jsonBook, "authorLink");
-        if (authorDBR != null) authorDBR = authorDBR.split("/")[4];
-        String literaryGenre = this.getFromJson(jsonBook, "literaryGenre");
-        String genre = this.getFromJson(jsonBook, "genre");
-        String mediaType = this.getFromJson(jsonBook, "mediaType");
-        String numberOfPages = this.getFromJson(jsonBook, "numberOfPages");
-        String pages = this.getFromJson(jsonBook, "pages");
-        String publisher = this.getFromJson(jsonBook, "publisher");
-        String published = this.getFromJson(jsonBook, "published");
-        String thumbnail = this.getFromJson(jsonBook, "thumbnail");
-        String language = this.getFromJson(jsonBook, "language");
+        String label = this.getFromJson(jsonBook, "l");
+        String name = this.getFromJson(jsonBook, "n");
+        String abstractDescription = this.getFromJson(jsonBook, "ab");
+        String authorName = this.getFromJson(jsonBook, "a");
+        String authorDBR = this.getFromJson(jsonBook, "aL");
+        if (authorDBR != null && !authorDBR.isEmpty()) authorDBR = authorDBR.split("/")[4];
+        String literaryGenre = this.getFromJson(jsonBook, "lG");
+        String genre = this.getFromJson(jsonBook, "g");
+        String numberOfPages = this.getFromJson(jsonBook, "nP");
+        String pages = this.getFromJson(jsonBook, "p");
+        String publisher = this.getFromJson(jsonBook, "pr");
+        String published = this.getFromJson(jsonBook, "pd");
+        String thumbnail = this.getFromJson(jsonBook, "t");
+        String language = this.getFromJson(jsonBook, "lg");
 
         Book book = new Book(bookDBR, (!label.isEmpty()) ? label : name, abstractDescription,
                 authorDBR, authorName, (!literaryGenre.isEmpty()) ? literaryGenre : genre,
-                mediaType, (!numberOfPages.isEmpty()) ? numberOfPages : pages, publisher,
+                (!numberOfPages.isEmpty()) ? numberOfPages : pages, publisher,
                 published, thumbnail, language);
         return book;
     }
