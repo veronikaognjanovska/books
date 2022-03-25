@@ -55,7 +55,7 @@ public class BookController {
         String url = Constants.getBookDetailsURL(book);
         Book bookDetails = this.dbpediaService.getDataDetails(url, book);
         model.addAttribute("book", bookDetails);
-        model.addAttribute("bodyContent", "books");
+        model.addAttribute("bodyContent", "detail-book");
         return "master-template";
     }
 

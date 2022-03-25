@@ -5,7 +5,6 @@
             <h3 class="jumbotron-heading">All books</h3>
         </div>
     </section>
-    <!--OD TUKA SE PISHUVA------------------------------------------------------------------------------------->
     <div class="container mb-4">
         <div class="row">
             <div class="col-12" th:if="${books.size()>0}">
@@ -15,7 +14,7 @@
                         <tr>
                             <th scope="col">Book name</th>
                             <th scope="col">Author</th>
-                            <th scope="col">Genre</th>
+                            <th scope="col">Number of pages</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
@@ -27,16 +26,9 @@
                             <td class="text-right">
                                 <th:block>
                                     <a th:href="@{'/books/{book}' (book=${book.bookDBR})}"
-                                       class="btn btn-sm btn-info edit-product"><i class="fa fa-trash">Edit</i></a>
+                                       class="btn btn-sm btn-info"
+                                       sec:authorize="isAuthenticated()"><i class="fa fa-trash">Details</i></a>
                                 </th:block>
-
-                                <form th:action="@{'/shopping-cart/add-product/{id}' (id=${book.bookDBR})}"
-                                      th:method="POST"
-                                      sec:authorize="isAuthenticated()">
-                                    <button type="submit" class="btn btn-sm btn-primary cart-product"><i
-                                            class="fa fa-trash">Add
-                                        product to cart</i></button>
-                                </form>
                             </td>
                         </tr>
                         </tbody>
@@ -45,9 +37,6 @@
             </div>
             <div class="col mb-3">
                 <div class="row">
-                    <!--                    <div class="col-sm-12 col-md-12" sec:authorize="hasRole('ROLE_ADMIN')">-->
-                    <!--                        <a href="/products/add-form" class="btn btn-block btn-dark add-product-btn">Add new product</a>-->
-                    <!--                    </div>-->
                 </div>
             </div>
         </div>

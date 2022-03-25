@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Pattern;
 
 /**
  * Utility class that holds values for constants used
@@ -16,7 +17,13 @@ public class Constants {
     public static final String DBPEDIA_SPARQL_URL_END = "&format=application%2Fsparql-results%2Bjson&timeout=30000&signal_void=on&signal_unconnected=on";
 
     public static final String getBookDetailsURL(String searchBookTitle) {
-        String searchText = "dbr%3A" + searchBookTitle;
+        String search = "";
+        try {
+            search = URLEncoder.encode(replaceSymbol(searchBookTitle), StandardCharsets.UTF_8.toString());
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
+        String searchText = "dbr%3A" + search;
         return DBPEDIA_SPARQL_URL + DBPEDIA_SPARQL_URL_GRAPH +
                 "select+distinct+%3Fab+%3Fa+%3FaL+%3Fl+%3Fn+%3FlG+%3Fg+%3Fp+%3FnP+%3Fpr+%3Fpd+%3Ft+%3Flg+where+%7B%0D%0A" +
                 searchText + "+dbo%3Aabstract+%3Fab.%0D%0AOPTIONAL%7B" +
@@ -67,6 +74,18 @@ public class Constants {
     private String encodeValue(String value) throws UnsupportedEncodingException {
         return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
     }
+    private static String replaceSymbol(String value) {
+
+        value=value.replaceAll(",","\\\\,");
+        value=value.replaceAll("'","\\\\'");
+        value=value.replaceAll("\\(","\\\\(");
+        value=value.replaceAll("\\)","\\\\)");
+        value=value.replaceAll("&","\\\\&");
+
+        return value;
+    }
+
+
 }
 
 /*
