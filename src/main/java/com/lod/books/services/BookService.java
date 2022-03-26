@@ -45,8 +45,6 @@ public class BookService extends DbpediaService<Book> {
         String authorName = this.getFromJson(jsonBook, "a");
         String authorDBR = this.getFromJson(jsonBook, "aL");
         if (authorDBR != null && !authorDBR.isEmpty()) authorDBR = authorDBR.split("/")[4];
-        String literaryGenre = this.getFromJson(jsonBook, "lG");
-        String genre = this.getFromJson(jsonBook, "g");
         String numberOfPages = this.getFromJson(jsonBook, "nP");
         String pages = this.getFromJson(jsonBook, "p");
         String publisher = this.getFromJson(jsonBook, "pr");
@@ -55,9 +53,20 @@ public class BookService extends DbpediaService<Book> {
         String language = this.getFromJson(jsonBook, "lg");
 
         Book book = new Book(bookDBR, (!label.isEmpty()) ? label : name, abstractDescription,
-                authorDBR, authorName, (!literaryGenre.isEmpty()) ? literaryGenre : genre,
+                authorDBR, authorName,
                 (!numberOfPages.isEmpty()) ? numberOfPages : pages, publisher,
                 published, thumbnail, language);
+
+        List<String> literaryGenres = jsonArray.stream().map((jb) -> {
+            String[] literaryGenreArray = this.getFromJson((JSONObject) jb, "lG").split("/");
+            String literaryGenre = literaryGenreArray[literaryGenreArray.length - 1];
+            if (!literaryGenre.isEmpty()) return literaryGenre.replaceAll("_", " ");
+            String[] genreArray = this.getFromJson((JSONObject) jb, "g").split("/");
+            return genreArray[genreArray.length - 1].replaceAll("_", " ");
+        }).distinct().collect(Collectors.toList());
+
+        book.setLiteraryGenre(literaryGenres);
+
         return book;
     }
 

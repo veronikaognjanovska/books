@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @Data
 @Entity
@@ -29,8 +28,6 @@ public class User implements UserDetails {
     private boolean isCredentialsNonExpired = true;
     private boolean isEnabled = true;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<BookCart> carts;
 
     @Enumerated(value = EnumType.STRING)
     private Role role;

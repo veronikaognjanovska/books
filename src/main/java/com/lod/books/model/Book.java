@@ -3,25 +3,20 @@ package com.lod.books.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
-@Entity
 @NoArgsConstructor
 @Data
 public class Book implements Serializable {
 
-    @Id
-    @GeneratedValue
-    private Long id;
     private String bookDBR;
     private String label; // label - name
     private String abstractDescription; // abstract
     private String authorDBR;
     private String authorName;
-    private String literaryGenre; // literaryGenre - genre
+    private List<String> literaryGenre; // literaryGenre - genre
     private String numberOfPages; // numberOfPages - pages
     private String publisher;
     private String published;
@@ -35,13 +30,13 @@ public class Book implements Serializable {
         this.numberOfPages = numberOfPages;
     }
 
-    public Book(String bookDBR, String label, String abstractDescription, String authorDBR, String authorName, String literaryGenre, String numberOfPages, String publisher, String published, String thumbnail, String language) {
+    public Book(String bookDBR, String label, String abstractDescription, String authorDBR, String authorName, String numberOfPages, String publisher, String published, String thumbnail, String language) {
         this.bookDBR = bookDBR;
         this.label = label;
         this.abstractDescription = abstractDescription;
         this.authorDBR = authorDBR;
         this.authorName = authorName;
-        this.literaryGenre = literaryGenre;
+        this.literaryGenre = new LinkedList<>();
         this.numberOfPages = numberOfPages;
         this.publisher = publisher;
         this.published = published;
