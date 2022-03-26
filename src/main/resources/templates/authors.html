@@ -12,14 +12,24 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col">Category name</th>
-                        <th scope="col">Description</th>
+                        <th scope="col">Author name</th>
+                        <th scope="col">Occupation</th>
+                        <th scope="col">Number Of Works</th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr class="category" th:each="author : ${authors}">
                         <td th:text="${author.getName()}"></td>
-                        <td th:text="${author.getAbstractDescription()}"></td>
+                        <td th:text="${author.getOccupation()}"></td>
+                        <td th:text="${author.getNumberOfWorks()}"></td>
+                        <td class="text-right">
+                            <th:block>
+                                <a th:href="@{'/authors/{author}' (author=${author.authorDBR})}"
+                                   class="btn btn-sm btn-info"
+                                   sec:authorize="isAuthenticated()"><i class="fa fa-trash">Details</i></a>
+                            </th:block>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

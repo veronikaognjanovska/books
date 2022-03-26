@@ -55,7 +55,7 @@ public class AuthorController {
         String url = Constants.getAuthorDetailsURL(author);
         Author authorDetails = this.authorService.getDataDetails(url, author);
         model.addAttribute("author", authorDetails);
-        model.addAttribute("bodyContent", "detail-book");
+        model.addAttribute("bodyContent", "detail-author");
         return "master-template";
     }
 

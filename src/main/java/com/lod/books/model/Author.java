@@ -1,14 +1,15 @@
 package com.lod.books.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
+import java.util.LinkedList;
+import java.util.List;
+
+@NoArgsConstructor
+@Data
 public class Author {
-    @Id
-    @GeneratedValue
-    private Long id;
+    private String authorDBR; // label - name
     private String name; // label - name
     private String abstractDescription; // abstract
     private String birthDate;
@@ -19,6 +20,33 @@ public class Author {
     private String nationality;
     private String occupation;
     private String activeYearsStartYear;
-//    private String notablework;
-//    private String isAuthorOf;
+    private String numberOfWorks;
+    private List<String> isAuthorOf;
+
+    public Author(String authorDBR, String label, String occupation, String nw) {
+        this.authorDBR = authorDBR;
+        this.name = label;
+        this.occupation = occupation;
+        this.numberOfWorks = nw;
+    }
+
+    public Author(String authorDBR, String name, String abstractDescription,
+                  String birthDate, String birthPlace, String deathDate, String deathPlace,
+                  String thumbnail, String occupation, String nationality, String activeYearsStartYear,
+                  String numberOfWorks) {
+        this.authorDBR = authorDBR;
+        this.name = name;
+        this.abstractDescription = abstractDescription;
+        this.birthDate = birthDate;
+        this.birthPlace = birthPlace;
+        this.deathDate = deathDate;
+        this.deathPlace = deathPlace;
+        this.thumbnail = thumbnail;
+        this.nationality = nationality;
+        this.occupation = occupation;
+        this.activeYearsStartYear = activeYearsStartYear;
+        this.numberOfWorks = numberOfWorks;
+        this.isAuthorOf = new LinkedList<>();
+    }
+
 }

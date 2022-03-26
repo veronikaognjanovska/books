@@ -61,23 +61,30 @@ public class Constants {
 
     // authors
     public static final String getAuthorDetailsURL(String searchAuthorName) {
+        String search = "dbr:" + replaceSymbol(searchAuthorName);
         return DBPEDIA_SPARQL_URL + DBPEDIA_SPARQL_URL_GRAPH +
-                encodeValue("select ?a ?l ?ab ?bd ?bp ?dd ?dp ?t ?n ?o ?ay (count(?w) as ?nw) ?w where {" +
-                        "?w dbo:author ?a." +
-                        "?a rdfs:label ?l." +
-                        "OPTIONAL { ?a dbo:abstract ?ab}" +
-                        "OPTIONAL { ?a dbo:birthDate ?bd}" +
-                        "OPTIONAL { ?a dbo:birthPlace ?bPL. ?bPL rdfs:label ?bp}" +
-                        "OPTIONAL { ?a dbo:deathDate ?dd}" +
-                        "OPTIONAL { ?a dbp:nationality ?dPL. ?dPL rdfs:label ?dp}" +
-                        "OPTIONAL { ?a dbo:thumbnail ?t}" +
-                        "OPTIONAL { ?a dbp:nationality ?n}" +
-                        "OPTIONAL { ?a dbp:occupation ?o}" +
-                        "OPTIONAL { ?a dbo:activeYearsStartYear ?ay}" +
-                        "FILTER (lang(?l) = \"en\")." +
-                        "}" +
-                        "group by ?a ?l ?ab ?bd ?bp ?dd ?dp ?t ?n ?o ?ay ?w " +
-                        "LIMIT 10") +
+                encodeValue("select ?l ?ab ?bd ?bp ?dd ?dp ?t ?n ?o ?ay (count(?w) as ?nw) ?wl where {"
+                        + "?w dbo:author " + search + ". "
+                        + search + " rdfs:label ?l. "
+                        + "OPTIONAL { ?w rdfs:label ?wl}"
+                        + "OPTIONAL { " + search + " dbo:abstract ?ab}"
+                        + "OPTIONAL { " + search + " dbo:birthDate ?bd}"
+                        + "OPTIONAL { " + search + " dbo:birthPlace ?bPL. ?bPL rdfs:label ?bp}"
+                        + "OPTIONAL { " + search + " dbo:deathDate ?dd}"
+                        + "OPTIONAL { " + search + " dbp:nationality ?dPL. ?dPL rdfs:label ?dp}"
+                        + "OPTIONAL { " + search + " dbo:thumbnail ?t}"
+                        + "OPTIONAL { " + search + " dbp:nationality ?n}"
+                        + "OPTIONAL { " + search + " dbp:occupation ?o}"
+                        + "OPTIONAL { " + search + " dbo:activeYearsStartYear ?ay}"
+                        + "FILTER (lang(?l) = \"en\")."
+                        + "FILTER (lang(?ab) = \"en\")."
+                        + "FILTER (lang(?bp) = \"en\")."
+                        + "FILTER (lang(?dp) = \"en\")."
+                        + "FILTER (lang(?o) = \"en\")."
+                        + "FILTER (lang(?n) = \"en\")."
+                        + "}"
+                        + "group by ?l ?ab ?bd ?bp ?dd ?dp ?t ?n ?o ?ay ?wl "
+                        + "LIMIT 10") +
                 DBPEDIA_SPARQL_URL_END;
     }
 
