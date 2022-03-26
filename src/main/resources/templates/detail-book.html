@@ -7,27 +7,27 @@
     </section>
     <div class="container mb-4">
         <div class="row">
-            <div class="col-12" >
+            <div class="col-12">
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead th:action="@{'/books/{id}' (id=${bookDetails?.id})}">
-<!--                        <thead th:"book : ${bookDetails}">-->
                         <tr>
                             <th scope="col">Book name</th>
                             <td style="background-color: #D6EEEE;" th:text="${book.label}"></td>
                         </tr>
                         <tr>
                             <th scope="col">Author</th>
-                            <td style="background-color: #a5d6d6;" th:text="${book.authorName}"></td>
+                            <td style="background-color: #a5d6d6;">
+                                <a th:href="@{'/authors/{author}' (author=${book.authorDBR})}"
+                                   th:text="${book.authorName}"></a>
+                            </td>
                         </tr>
                         <tr>
                             <th scope="col">Number of pages</th>
                             <td style="background-color: #D6EEEE;" th:text="${book.numberOfPages}"></td>
-
                         </tr>
                         <tr>
                             <th scope="col">Genre</th>
-<!--                            <td style="background-color: #a5d6d6;"></td>-->
                             <td style="background-color: #a5d6d6;" th:text="${book.literaryGenre}"></td>
                         </tr>
                         <tr>
@@ -36,7 +36,7 @@
                         </tr>
                         <tr>
                             <th scope="col">Publisher</th>
-                            <td style="background-color: #a5d6d6;"th:text="${book.publisher}"></td>
+                            <td style="background-color: #a5d6d6;" th:text="${book.publisher}"></td>
                         </tr>
                         <tr>
                             <th scope="col">Published</th>
@@ -44,7 +44,7 @@
                         </tr>
                         <tr>
                             <th scope="col">Language</th>
-                            <td style="background-color: #a5d6d6;"th:text="${book.language}"></td>
+                            <td style="background-color: #a5d6d6;" th:text="${book.language}"></td>
                         </tr>
                         </thead>
                     </table>
