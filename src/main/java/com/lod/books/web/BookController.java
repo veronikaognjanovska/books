@@ -2,7 +2,7 @@ package com.lod.books.web;
 
 import com.lod.books.constants.Constants;
 import com.lod.books.model.Book;
-import com.lod.books.services.DbpediaService;
+import com.lod.books.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +15,7 @@ import java.util.List;
 public class BookController {
 
     @Autowired
-    protected DbpediaService dbpediaService;
+    protected BookService bookService;
 
     @GetMapping
     public String getBooks(@RequestParam(required = false) String error, Model model) {
@@ -25,7 +25,7 @@ public class BookController {
         }
 
         String url = Constants.getBooksURL(100);
-        List<Book> books = this.dbpediaService.getDataList(url);
+        List<Book> books = this.bookService.getDataList(url);
         model.addAttribute("books", books);
         model.addAttribute("bodyContent", "books");
         return "master-template";
@@ -39,7 +39,7 @@ public class BookController {
         }
 
         String url = Constants.getBookSearchURL(search, 100);
-        List<Book> books = this.dbpediaService.getDataList(url);
+        List<Book> books = this.bookService.getDataList(url);
         model.addAttribute("books", books);
         model.addAttribute("bodyContent", "books");
         return "master-template";
@@ -53,7 +53,7 @@ public class BookController {
         }
 
         String url = Constants.getBookDetailsURL(book);
-        Book bookDetails = this.dbpediaService.getDataDetails(url, book);
+        Book bookDetails = this.bookService.getDataDetails(url, book);
         model.addAttribute("book", bookDetails);
         model.addAttribute("bodyContent", "detail-book");
         return "master-template";
