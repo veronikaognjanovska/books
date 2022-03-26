@@ -30,6 +30,7 @@ public class Book implements Serializable {
         this.numberOfPages = numberOfPages;
     }
 
+<<<<<<< Updated upstream
     public Book(String bookDBR, String label, String abstractDescription, String authorDBR, String authorName, String numberOfPages, String publisher, String published, String thumbnail, String language) {
         this.bookDBR = bookDBR;
         this.label = label;

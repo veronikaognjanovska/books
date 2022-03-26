@@ -7,47 +7,54 @@
     </section>
     <div class="container mb-4">
         <div class="row">
-            <div class="col-12" th:if="${books.size()>0}">
+            <div class="col-12">
                 <div class="table-responsive">
                     <table class="table table-striped">
-                        <thead th:each="book : ${books}">
+                        <thead th:action="@{'authors/{author}' (id=${authorDetails?.id})}">
                         <tr>
                             <th scope="col">Author name</th>
-                            <td th:text="${book.label}" style="background-color: #D6EEEE;"></td>
+                            <td th:text="${author.name}" style="background-color: #D6EEEE;"></td>
                         </tr>
                         <tr>
-                            <th scope="col">Active years</th>
-                            <td th:text="${book.authorName}" style="background-color: #a5d6d6;"></td>
+                            <th scope="col">Start year</th>
+                            <td th:text="${author.activeYearsStartYear}" style="background-color: #a5d6d6;"></td>
                         </tr>
                         <tr>
                             <th scope="col">Birth date</th>
-                            <td th:text="${book.authorName}" style="background-color: #D6EEEE;"></td>
+                            <td th:text="${author.birthDate}" style="background-color: #D6EEEE;"></td>
                         </tr>
                         <tr>
                             <th scope="col">Death Date</th>
-                            <td th:text="${book.numberOfPages}" style="background-color: #a5d6d6;"></td>
-
+                            <td th:text="${author.deathDate}" style="background-color: #a5d6d6;"></td>
                         </tr>
                         <tr>
                             <th scope="col">Birth place</th>
-                            <td style="background-color: #D6EEEE;">zanr</td>
+                            <td th:text="${author.birthPlace}" style="background-color: #D6EEEE;"></td>
 
                         </tr>
                         <tr>
                             <th scope="col">Description</th>
-                            <td style="background-color: #a5d6d6;">zanr</td>
+                            <td th:text="${author.abstractDescription}" style="background-color: #a5d6d6;"></td>
                         </tr>
-                        <tr>
-                            <th scope="col">Thumbnail</th>
-                            <td style="background-color: #D6EEEE;">zanr</td>
+                        <tr th:if="${author.thumbnail != ''}">
+                            <th scope="col">Image</th>
+                            <td><img  th:src="@{${author.thumbnail}}" /></td>
                         </tr>
                         <tr>
                             <th scope="col">Nationality</th>
-                            <td style="background-color: #a5d6d6;">zanr</td>
+                            <td th:text="${author.nationality}" style="background-color: #a5d6d6;"></td>
                         </tr>
                         <tr>
                             <th scope="col">Occupation</th>
-                            <td style="background-color: #D6EEEE;">zanr</td>
+                            <td th:text="${author.occupation}" style="background-color: #D6EEEE;"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Number of works</th>
+                            <td th:text="${author.numberOfWorks}" style="background-color: #a5d6d6;"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Is author of</th>
+                            <td th:text="${author.isAuthorOf}" style="background-color: #D6EEEE;"></td>
                         </tr>
                         </thead>
                     </table>

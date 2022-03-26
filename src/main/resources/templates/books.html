@@ -9,6 +9,24 @@
         <div class="row">
             <div class="col-12" th:if="${books.size()>0}">
                 <div class="table-responsive">
+                    <form class="form-inline my-2 my-lg-0"
+                          th:action="@{'/books/search'}"
+                          th:method="POST">
+                        <div class="input-group input-group-sm">
+                            <input aria-describedby="inputGroup-sizing-sm" aria-label="Small" class="form-control"
+                                   placeholder="Search..."
+                                   th:id="search"
+                                   th:name="search"
+                                   type="text">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary btn-number" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <br>
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -25,9 +43,9 @@
                             <td th:text="${book.numberOfPages}"></td>
                             <td class="text-right">
                                 <th:block>
-                                    <a th:href="@{'/books/{book}' (book=${book.bookDBR})}"
-                                       class="btn btn-sm btn-info"
-                                       sec:authorize="isAuthenticated()"><i class="fa fa-trash">Details</i></a>
+                                    <a class="btn btn-sm btn-info"
+                                       sec:authorize="isAuthenticated()"
+                                       th:href="@{'/books/{book}' (book=${book.bookDBR})}"><i class="fa fa-search-plus">Details</i></a>
                                 </th:block>
                             </td>
                         </tr>

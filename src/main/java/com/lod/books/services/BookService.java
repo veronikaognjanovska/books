@@ -55,6 +55,7 @@ public class BookService extends DbpediaService<Book> {
         Book book = new Book(bookDBR, (!label.isEmpty()) ? label : name, abstractDescription,
                 authorDBR, authorName,
                 (!numberOfPages.isEmpty()) ? numberOfPages : pages, publisher,
+<<<<<<< Updated upstream
                 published, thumbnail, language);
 
         List<String> literaryGenres = jsonArray.stream().map((jb) -> {

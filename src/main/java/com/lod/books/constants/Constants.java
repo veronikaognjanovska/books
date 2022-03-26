@@ -18,7 +18,7 @@ public class Constants {
     public static final String getBookDetailsURL(String searchBookTitle) {
         String search = "dbr%3A" + encodeValue(replaceSymbol(searchBookTitle));
         return DBPEDIA_SPARQL_URL + DBPEDIA_SPARQL_URL_GRAPH +
-                "select+distinct+%3Fab+%3Fa+%3FaL+%3Fl+%3Fn+%3FlG+%3Fg+%3Fp+%3FnP+%3Fpr+%3Fpd+%3Ft+%3Flg+where+%7B%0D%0A" +
+                "select+distinct+%3Fab+%3Fa+%3FaL+%3Fl+%3Fn+%3FlG+%3Fg+%3Fp+%3FnP+%3Fpr+%3Fpd+%3Flg+where+%7B%0D%0A" +
                 search + "+dbo%3Aabstract+%3Fab.%0D%0AOPTIONAL%7B" +
                 search + "+dbo%3Aauthor+%3FaL.+%3FaL+dbp%3Aname+%3Fa%7D%0D%0AOPTIONAL%7B+" +
                 search + "+rdfs%3Alabel+%3Fl%7D%0D%0AOPTIONAL%7B+" +
@@ -29,7 +29,6 @@ public class Constants {
                 search + "+dbp%3Apages+%3Fp%7D%0D%0AOPTIONAL%7B+" +
                 search + "+dbo%3Apublisher+%3Fpe.%3Fpe+dbp%3Aname+%3Fpr%7D%0D%0AOPTIONAL%7B+" +
                 search + "+dbp%3Apublished+%3Fpd%7D%0D%0AOPTIONAL%7B+" +
-                search + "+dbo%3Athumbnail+%3Ft%7D%0D%0AOPTIONAL%7B+" +
                 search + "+dbp%3Alanguage+%3Flg%7D%0D%0AFILTER%28lang%28%3Fab%29%3D%22en%22%29%7DLIMIT+10+" +
                 DBPEDIA_SPARQL_URL_END;
     }
