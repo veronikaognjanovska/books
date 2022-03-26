@@ -20,7 +20,6 @@ public class Book implements Serializable {
     private String numberOfPages; // numberOfPages - pages
     private String publisher;
     private String published;
-    private String thumbnail;
     private String language;
 
     public Book(String bookDBR, String label, String author, String numberOfPages) {
@@ -30,8 +29,7 @@ public class Book implements Serializable {
         this.numberOfPages = numberOfPages;
     }
 
-<<<<<<< Updated upstream
-    public Book(String bookDBR, String label, String abstractDescription, String authorDBR, String authorName, String numberOfPages, String publisher, String published, String thumbnail, String language) {
+    public Book(String bookDBR, String label, String abstractDescription, String authorDBR, String authorName, String numberOfPages, String publisher, String published, String language) {
         this.bookDBR = bookDBR;
         this.label = label;
         this.abstractDescription = abstractDescription;
@@ -41,7 +39,6 @@ public class Book implements Serializable {
         this.numberOfPages = numberOfPages;
         this.publisher = publisher;
         this.published = published;
-        this.thumbnail = thumbnail;
         this.language = language;
     }
 }

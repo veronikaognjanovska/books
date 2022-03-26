@@ -49,14 +49,12 @@ public class BookService extends DbpediaService<Book> {
         String pages = this.getFromJson(jsonBook, "p");
         String publisher = this.getFromJson(jsonBook, "pr");
         String published = this.getFromJson(jsonBook, "pd");
-        String thumbnail = this.getFromJson(jsonBook, "t");
         String language = this.getFromJson(jsonBook, "lg");
 
         Book book = new Book(bookDBR, (!label.isEmpty()) ? label : name, abstractDescription,
                 authorDBR, authorName,
                 (!numberOfPages.isEmpty()) ? numberOfPages : pages, publisher,
-<<<<<<< Updated upstream
-                published, thumbnail, language);
+                published, language);
 
         List<String> literaryGenres = jsonArray.stream().map((jb) -> {
             String[] literaryGenreArray = this.getFromJson((JSONObject) jb, "lG").split("/");
