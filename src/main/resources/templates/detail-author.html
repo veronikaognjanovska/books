@@ -30,7 +30,6 @@
                         <tr>
                             <th scope="col">Birth place</th>
                             <td style="background-color: #D6EEEE;" th:text="${author.birthPlace}"></td>
-
                         </tr>
                         <tr>
                             <th scope="col">Description</th>
@@ -42,31 +41,27 @@
                         </tr>
                         <tr>
                             <th scope="col">Nationality</th>
-                            <td style="background-color: #a5d6d6;" th:text="${author.nationality}"></td>
+                            <td style="background-color: #D6EEEE;" th:text="${author.nationality}"></td>
                         </tr>
                         <tr>
-                            <th scope="col">Occupation</th>
-                            <td style="background-color: #D6EEEE;" th:text="${author.occupation}"></td>
+                            <th scope="col">List of occupations</th>
+                            <td style="background-color: #a5d6d6;">
+                                <p th:each="occupation : ${author.occupationArray}" th:text="${occupation}"></p>
+                            </td>
                         </tr>
                         <tr>
                             <th scope="col">Number of works</th>
-                            <td style="background-color: #a5d6d6;" th:text="${author.numberOfWorks}"></td>
+                            <td style="background-color: #D6EEEE;" th:text="${author.numberOfWorks}"></td>
                         </tr>
                         <tr>
                             <th scope="col">Is author of</th>
-                            <td style="background-color: #D6EEEE;">
+                            <td style="background-color: #a5d6d6;">
                                 <p th:each="isAuthorOf : ${author.isAuthorOf}" th:text="${isAuthorOf}"></p>
                             </td>
                         </tr>
                         <tr>
                             <th scope="col">Genre</th>
-                            <td style="background-color: #a5d6d6;" th:text="${author.genre}"></td>
-                        </tr>
-                        <tr>
-                            <th scope="col">List of occupations</th>
-                            <td style="background-color: #D6EEEE;">
-                                <p th:each="occupation : ${author.occupationArray}" th:text="${occupation}"></p>
-                            </td>
+                            <td style="background-color: #D6EEEE;" th:text="${author.genre}"></td>
                         </tr>
                         </thead>
                     </table>
