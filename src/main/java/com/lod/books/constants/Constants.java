@@ -16,20 +16,25 @@ public class Constants {
 
     // books
     public static final String getBookDetailsURL(String searchBookTitle) {
-        String search = "dbr%3A" + encodeValue(replaceSymbol(searchBookTitle));
+        String search = "dbr:" + replaceSymbol(searchBookTitle);
         return DBPEDIA_SPARQL_URL + DBPEDIA_SPARQL_URL_GRAPH +
-                "select+distinct+%3Fab+%3Fa+%3FaL+%3Fl+%3Fn+%3FlG+%3Fg+%3Fp+%3FnP+%3Fpr+%3Fpd+%3Flg+where+%7B%0D%0A" +
-                search + "+dbo%3Aabstract+%3Fab.%0D%0AOPTIONAL%7B" +
-                search + "+dbo%3Aauthor+%3FaL.+%3FaL+dbp%3Aname+%3Fa%7D%0D%0AOPTIONAL%7B+" +
-                search + "+rdfs%3Alabel+%3Fl%7D%0D%0AOPTIONAL%7B+" +
-                search + "+foaf%3Aname+%3Fn%7D%0D%0AOPTIONAL%7B+" +
-                search + "+dbo%3AliteraryGenre+%3FlG%7D%0D%0AOPTIONAL%7B+" +
-                search + "+dbp%3Agenre+%3Fg%7D%0D%0AOPTIONAL%7B+" +
-                search + "+dbo%3AnumberOfPages+%3FnP%7D%0D%0AOPTIONAL%7B+" +
-                search + "+dbp%3Apages+%3Fp%7D%0D%0AOPTIONAL%7B+" +
-                search + "+dbo%3Apublisher+%3Fpe.%3Fpe+dbp%3Aname+%3Fpr%7D%0D%0AOPTIONAL%7B+" +
-                search + "+dbp%3Apublished+%3Fpd%7D%0D%0AOPTIONAL%7B+" +
-                search + "+dbp%3Alanguage+%3Flg%7D%0D%0AFILTER%28lang%28%3Fab%29%3D%22en%22%29%7DLIMIT+10+" +
+                encodeValue("select distinct ?s ?ab ?a ?aL ?l ?n ?lG ?g ?p ?nP ?pr ?pd ?lg where{" +
+                        search + " dbo:abstract ?ab." +
+                        "OPTIONAL{ " + search + " dbo:author ?aL. ?aL dbp:name ?a.}" +
+                        "OPTIONAL{ " + search + " rdfs:label ?l.}" +
+                        "OPTIONAL{ " + search + " foaf:name ?n.}" +
+                        "OPTIONAL{ " + search + " dbo:literaryGenre ?lG.}" +
+                        "OPTIONAL{ " + search + " dbp:genre ?g.}" +
+                        "OPTIONAL{ " + search + " dbo:numberOfPages ?nP.}" +
+                        "OPTIONAL{ " + search + " dbp:pages ?p.}" +
+                        "OPTIONAL{ " + search + " dbo:publisher ?pe. ?pe dbp:name ?pr.}" +
+                        "OPTIONAL{ " + search + " dbp:published ?pd.}" +
+                        "OPTIONAL{ " + search + " dbp:language ?lg.}" +
+                        "OPTIONAL{ " + search + " owl:sameAs ?s}" +
+                        "FILTER (lang(?ab)=\"en\")." +
+                        "FILTER regex(lcase(str(?s)), \".*http://www.wikidata.org/entity/\")." +
+                        "}" +
+                        "LIMIT 10") +
                 DBPEDIA_SPARQL_URL_END;
     }
 

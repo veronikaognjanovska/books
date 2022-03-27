@@ -28,7 +28,9 @@
                         </tr>
                         <tr>
                             <th scope="col">Genre</th>
-                            <td style="background-color: #a5d6d6;" th:text="${book.literaryGenre}"></td>
+                            <td style="background-color: #a5d6d6;">
+                                <p th:each="b : ${book.literaryGenre}" th:text="${b}"></p>
+                            </td>
                         </tr>
                         <tr>
                             <th scope="col">Description</th>

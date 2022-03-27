@@ -13,48 +13,50 @@
                         <thead th:action="@{'authors/{author}' (id=${authorDetails?.id})}">
                         <tr>
                             <th scope="col">Author name</th>
-                            <td th:text="${author.name}" style="background-color: #D6EEEE;"></td>
+                            <td style="background-color: #D6EEEE;" th:text="${author.name}"></td>
                         </tr>
                         <tr>
                             <th scope="col">Start year</th>
-                            <td th:text="${author.activeYearsStartYear}" style="background-color: #a5d6d6;"></td>
+                            <td style="background-color: #a5d6d6;" th:text="${author.activeYearsStartYear}"></td>
                         </tr>
                         <tr>
                             <th scope="col">Birth date</th>
-                            <td th:text="${author.birthDate}" style="background-color: #D6EEEE;"></td>
+                            <td style="background-color: #D6EEEE;" th:text="${author.birthDate}"></td>
                         </tr>
                         <tr>
                             <th scope="col">Death Date</th>
-                            <td th:text="${author.deathDate}" style="background-color: #a5d6d6;"></td>
+                            <td style="background-color: #a5d6d6;" th:text="${author.deathDate}"></td>
                         </tr>
                         <tr>
                             <th scope="col">Birth place</th>
-                            <td th:text="${author.birthPlace}" style="background-color: #D6EEEE;"></td>
+                            <td style="background-color: #D6EEEE;" th:text="${author.birthPlace}"></td>
 
                         </tr>
                         <tr>
                             <th scope="col">Description</th>
-                            <td th:text="${author.abstractDescription}" style="background-color: #a5d6d6;"></td>
+                            <td style="background-color: #a5d6d6;" th:text="${author.abstractDescription}"></td>
                         </tr>
                         <tr th:if="${author.thumbnail != ''}">
                             <th scope="col">Image</th>
-                            <td><img  th:src="@{${author.thumbnail}}" /></td>
+                            <td><img th:src="@{${author.thumbnail}}"/></td>
                         </tr>
                         <tr>
                             <th scope="col">Nationality</th>
-                            <td th:text="${author.nationality}" style="background-color: #a5d6d6;"></td>
+                            <td style="background-color: #a5d6d6;" th:text="${author.nationality}"></td>
                         </tr>
                         <tr>
                             <th scope="col">Occupation</th>
-                            <td th:text="${author.occupation}" style="background-color: #D6EEEE;"></td>
+                            <td style="background-color: #D6EEEE;" th:text="${author.occupation}"></td>
                         </tr>
                         <tr>
                             <th scope="col">Number of works</th>
-                            <td th:text="${author.numberOfWorks}" style="background-color: #a5d6d6;"></td>
+                            <td style="background-color: #a5d6d6;" th:text="${author.numberOfWorks}"></td>
                         </tr>
                         <tr>
                             <th scope="col">Is author of</th>
-                            <td th:text="${author.isAuthorOf}" style="background-color: #D6EEEE;"></td>
+                            <td style="background-color: #D6EEEE;">
+                                <p th:each="isAuthorOf : ${author.isAuthorOf}" th:text="${isAuthorOf}"></p>
+                            </td>
                         </tr>
                         </thead>
                     </table>
