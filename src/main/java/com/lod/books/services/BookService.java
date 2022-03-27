@@ -1,5 +1,6 @@
 package com.lod.books.services;
 
+import com.lod.books.constants.Constants;
 import com.lod.books.model.Book;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
@@ -20,7 +21,11 @@ public class BookService extends DbpediaService<Book> {
     @Override
     public Book getDataDetails(String url, String bookDBR) {
         JSONArray jsonArray = this.getData(url);
-        return this.getBookDetailsFromJson(jsonArray, bookDBR);
+        Book book = this.getBookDetailsFromJson(jsonArray, bookDBR);
+        String urlWIKI = Constants.getBookDetailsURL_WIKI(book.getBookWIKI());
+        JSONArray jsonArrayWIKI = this.getData(urlWIKI);
+        book = this.getBookDetailsFromJsonWIKI(jsonArrayWIKI, book);
+        return book;
     }
 
     private List<Book> getListBooksFromJson(JSONArray jsonArray) {
@@ -40,6 +45,8 @@ public class BookService extends DbpediaService<Book> {
     private Book getBookDetailsFromJson(JSONArray jsonArray, String bookDBR) {
         JSONObject jsonBook = (JSONObject) jsonArray.get(0);
         String label = this.getFromJson(jsonBook, "l");
+        String[] wikiArray = this.getFromJson(jsonBook, "s").split("/");
+        String wiki = wikiArray[wikiArray.length - 1];
         String name = this.getFromJson(jsonBook, "n");
         String abstractDescription = this.getFromJson(jsonBook, "ab");
         String authorName = this.getFromJson(jsonBook, "a");
@@ -51,7 +58,7 @@ public class BookService extends DbpediaService<Book> {
         String published = this.getFromJson(jsonBook, "pd");
         String language = this.getFromJson(jsonBook, "lg");
 
-        Book book = new Book(bookDBR, (!label.isEmpty()) ? label : name, abstractDescription,
+        Book book = new Book(bookDBR, wiki, (!label.isEmpty()) ? label : name, abstractDescription,
                 authorDBR, authorName,
                 (!numberOfPages.isEmpty()) ? numberOfPages : pages, publisher,
                 published, language);
@@ -65,6 +72,21 @@ public class BookService extends DbpediaService<Book> {
         }).distinct().collect(Collectors.toList());
 
         book.setLiteraryGenre(literaryGenres);
+
+        return book;
+    }
+
+    private Book getBookDetailsFromJsonWIKI(JSONArray jsonArray, Book book) {
+        JSONObject jsonBook = (JSONObject) jsonArray.get(0);
+        String basedOn = this.getFromJson(jsonBook, "b");
+        String derivativeWork = this.getFromJson(jsonBook, "d");
+        List<String> characters = jsonArray.stream().map((jb) ->
+                this.getFromJson((JSONObject) jb, "c")
+        ).distinct().collect(Collectors.toList());
+
+        book.setBasedOn(basedOn);
+        book.setDerivativeWork(derivativeWork);
+        book.setCharacters(characters);
 
         return book;
     }

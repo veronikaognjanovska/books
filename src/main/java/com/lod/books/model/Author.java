@@ -9,7 +9,8 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class Author {
-    private String authorDBR; // label - name
+    private String authorDBR;
+    private String authorWIKI;
     private String name; // label - name
     private String abstractDescription; // abstract
     private String birthDate;
@@ -19,8 +20,10 @@ public class Author {
     private String thumbnail;
     private String nationality;
     private String occupation;
+    private List<String> occupationArray; // wiki
     private String activeYearsStartYear;
     private String numberOfWorks;
+    private String genre; // wiki
     private List<String> isAuthorOf;
 
     public Author(String authorDBR, String label, String occupation, String nw) {
@@ -30,11 +33,12 @@ public class Author {
         this.numberOfWorks = nw;
     }
 
-    public Author(String authorDBR, String name, String abstractDescription,
+    public Author(String authorDBR, String authorWIKI, String name, String abstractDescription,
                   String birthDate, String birthPlace, String deathDate, String deathPlace,
                   String thumbnail, String occupation, String nationality, String activeYearsStartYear,
                   String numberOfWorks) {
         this.authorDBR = authorDBR;
+        this.authorWIKI = authorWIKI;
         this.name = name;
         this.abstractDescription = abstractDescription;
         this.birthDate = birthDate;
@@ -47,6 +51,8 @@ public class Author {
         this.activeYearsStartYear = activeYearsStartYear;
         this.numberOfWorks = numberOfWorks;
         this.isAuthorOf = new LinkedList<>();
+        this.genre = "";
+        this.occupationArray = new LinkedList<>();
     }
 
 }

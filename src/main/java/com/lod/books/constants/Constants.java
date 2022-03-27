@@ -13,6 +13,8 @@ public class Constants {
     public static final String DBPEDIA_SPARQL_URL = "https://dbpedia.org/sparql";
     public static final String DBPEDIA_SPARQL_URL_GRAPH = "?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=";
     public static final String DBPEDIA_SPARQL_URL_END = "&format=application%2Fsparql-results%2Bjson&timeout=30000&signal_void=on&signal_unconnected=on";
+    public static final String WIKI_SPARQL_URL = "https://query.wikidata.org/sparql?query=";
+    public static final String WIKI_SPARQL_URL_END = "&format=json";
 
     // books
     public static final String getBookDetailsURL(String searchBookTitle) {
@@ -67,28 +69,29 @@ public class Constants {
     public static final String getAuthorDetailsURL(String searchAuthorName) {
         String search = "dbr:" + replaceSymbol(searchAuthorName);
         return DBPEDIA_SPARQL_URL + DBPEDIA_SPARQL_URL_GRAPH +
-                encodeValue("select ?l ?ab ?bd ?bp ?dd ?dp ?t ?n ?o ?ay (count(?w) as ?nw) ?wl where {"
-                        + "?w dbo:author " + search + ". "
-                        + search + " rdfs:label ?l. "
-                        + "OPTIONAL { ?w rdfs:label ?wl}"
-                        + "OPTIONAL { " + search + " dbo:abstract ?ab}"
-                        + "OPTIONAL { " + search + " dbo:birthDate ?bd}"
-                        + "OPTIONAL { " + search + " dbo:birthPlace ?bPL. ?bPL rdfs:label ?bp}"
-                        + "OPTIONAL { " + search + " dbo:deathDate ?dd}"
-                        + "OPTIONAL { " + search + " dbp:nationality ?dPL. ?dPL rdfs:label ?dp}"
-                        + "OPTIONAL { " + search + " dbo:thumbnail ?t}"
-                        + "OPTIONAL { " + search + " dbp:nationality ?n}"
-                        + "OPTIONAL { " + search + " dbp:occupation ?o}"
-                        + "OPTIONAL { " + search + " dbo:activeYearsStartYear ?ay}"
-                        + "FILTER (lang(?l) = \"en\")."
-                        + "FILTER (lang(?ab) = \"en\")."
-                        + "FILTER (lang(?bp) = \"en\")."
-                        + "FILTER (lang(?dp) = \"en\")."
-                        + "FILTER (lang(?o) = \"en\")."
-                        + "FILTER (lang(?n) = \"en\")."
-                        + "}"
-                        + "group by ?l ?ab ?bd ?bp ?dd ?dp ?t ?n ?o ?ay ?wl "
-                        + "LIMIT 10") +
+                encodeValue("select ?l ?s ?ab ?bd ?bp ?dd ?dp ?t ?n ?ay (count(?w) as ?nw) ?wl where {" +
+                        "?w dbo:author " + search + " . " +
+                        search + " rdfs:label ?l. " +
+                        "OPTIONAL { ?w rdfs:label ?wl }" +
+                        "OPTIONAL { " + search + "  dbo:abstract ?ab}" +
+                        "OPTIONAL { " + search + "  dbo:birthDate ?bd}" +
+                        "OPTIONAL {" + search + "  dbo:birthPlace ?bPL. ?bPL rdfs:label ?bp}" +
+                        "OPTIONAL { " + search + "  dbo:deathDate ?dd}" +
+                        "OPTIONAL { " + search + "  dbp:nationality ?dPL. ?dPL rdfs:label ?dp}" +
+                        "OPTIONAL {" + search + "  dbo:thumbnail ?t}" +
+                        "OPTIONAL {" + search + "  dbp:nationality ?n}" +
+                        "OPTIONAL {" + search + "  dbo:activeYearsStartYear ?ay}" +
+                        "OPTIONAL {" + search + "  owl:sameAs ?s}" +
+                        "FILTER (lang(?l) = \"en\")." +
+                        "FILTER (lang(?ab) = \"en\")." +
+                        "FILTER (lang(?bp) = \"en\")." +
+                        "FILTER (lang(?dp) = \"en\")." +
+                        "FILTER (lang(?n) = \"en\")." +
+                        "FILTER (lang(?n) = \"en\")." +
+                        "FILTER regex(lcase(str(?s)), \".*http://www.wikidata.org/entity/\")." +
+                        "}" +
+                        "group by ?l ?ab ?bd ?bp ?dd ?dp ?t ?n ?ay ?wl ?s " +
+                        "LIMIT 10") +
                 DBPEDIA_SPARQL_URL_END;
     }
 
@@ -120,6 +123,35 @@ public class Constants {
                 + DBPEDIA_SPARQL_URL_END;
     }
 
+    // wikidata
+    public static final String getBookDetailsURL_WIKI(String searchSameAs) {
+        // it may return an empty array
+        return WIKI_SPARQL_URL +
+                encodeValue("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+                        "PREFIX wd: <http://www.wikidata.org/entity/>" +
+                        "select distinct ?c ?b ?d where {" +
+                        "wd:" + searchSameAs + " rdfs:label ?label." +
+                        "OPTIONAL { wd:" + searchSameAs + " wdt:P674 ?cs .?cs rdfs:label ?c  filter (lang(?c) = \"en\").}" +
+                        "OPTIONAL { wd:" + searchSameAs + " wdt:P144 ?bn. ?bn rdfs:label ?b  filter (lang(?b) = \"en\").}" +
+                        "OPTIONAL { wd:" + searchSameAs + " wdt:P4969 ?dw. ?dw rdfs:label ?d  filter (lang(?d) = \"en\").}" +
+                        "}LIMIT 100"
+                ).replaceAll("\\+", "%20")
+                + WIKI_SPARQL_URL_END;
+    }
+
+    public static final String getAuthorDetailsURL_WIKI(String searchSameAs) {
+        // it may return an empty array
+        return WIKI_SPARQL_URL +
+                encodeValue("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+                        "PREFIX wd: <http://www.wikidata.org/entity/>" +
+                        "select distinct ?g ?o where {" +
+                        "wd:" + searchSameAs + " rdfs:label ?label ." +
+                        "OPTIONAL{wd:" + searchSameAs + " wdt:P21 ?ge.?ge rdfs:label ?g filter (lang(?g) = \"en\").}" +
+                        "OPTIONAL{wd:" + searchSameAs + " wdt:P106 ?oc.?oc rdfs:label ?o filter (lang(?o) = \"en\").}" +
+                        "}LIMIT 100"
+                ).replaceAll("\\+", "%20")
+                + WIKI_SPARQL_URL_END;
+    }
 
     //private functions
     private static String encodeValue(String value) {
