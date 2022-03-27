@@ -48,6 +48,20 @@
                             <th scope="col">Language</th>
                             <td style="background-color: #a5d6d6;" th:text="${book.language}"></td>
                         </tr>
+                        <tr>
+                            <th scope="col">Based On</th>
+                            <td style="background-color: #a5d6d6;" th:text="${book.basedOn}"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Derivative Work</th>
+                            <td style="background-color: #a5d6d6;" th:text="${book.derivativeWork}"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Characters</th>
+                            <td style="background-color: #a5d6d6;">
+                                <p th:each="b : ${book.characters}" th:text="${b}"></p>
+                            </td>
+                        </tr>
                         </thead>
                     </table>
                 </div>

@@ -58,6 +58,16 @@
                                 <p th:each="isAuthorOf : ${author.isAuthorOf}" th:text="${isAuthorOf}"></p>
                             </td>
                         </tr>
+                        <tr>
+                            <th scope="col">Genre</th>
+                            <td style="background-color: #a5d6d6;" th:text="${author.genre}"></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">List of occupations</th>
+                            <td style="background-color: #D6EEEE;">
+                                <p th:each="occupation : ${author.occupationArray}" th:text="${occupation}"></p>
+                            </td>
+                        </tr>
                         </thead>
                     </table>
                 </div>

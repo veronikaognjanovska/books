@@ -34,6 +34,7 @@ public class Constants {
                         "OPTIONAL{ " + search + " dbp:language ?lg.}" +
                         "OPTIONAL{ " + search + " owl:sameAs ?s}" +
                         "FILTER (lang(?ab)=\"en\")." +
+                        "FILTER (lang(?l)=\"en\")." +
                         "FILTER regex(lcase(str(?s)), \".*http://www.wikidata.org/entity/\")." +
                         "}" +
                         "LIMIT 10") +
