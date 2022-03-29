@@ -78,7 +78,7 @@ public class Constants {
                         "OPTIONAL { " + search + "  dbo:birthDate ?bd}" +
                         "OPTIONAL {" + search + "  dbo:birthPlace ?bPL. ?bPL rdfs:label ?bp}" +
                         "OPTIONAL { " + search + "  dbo:deathDate ?dd}" +
-                        "OPTIONAL { " + search + "  dbp:nationality ?dPL. ?dPL rdfs:label ?dp}" +
+                        "OPTIONAL { " + search + "  dbp:deathPlace ?dPL. ?dPL rdfs:label ?dp}" +
                         "OPTIONAL {" + search + "  dbo:thumbnail ?t}" +
                         "OPTIONAL {" + search + "  dbp:nationality ?n}" +
                         "OPTIONAL {" + search + "  dbo:activeYearsStartYear ?ay}" +
